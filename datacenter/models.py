@@ -54,7 +54,4 @@ def is_visit_long(visit, minutes=60):
     dedicated_hours = int(total_seconds // 3600)
     dedicated_minutes = int((total_seconds % 3600) // 60)
     duration_in_minutes = (dedicated_hours * 60) + dedicated_minutes
-    if duration_in_minutes > minutes:
-        return True
-    else:
-        return False
+    return duration_in_minutes > minutes

@@ -6,20 +6,21 @@ from .models import is_visit_long
 
 
 def passcard_info_view(request, passcode):
-    passcard = Passcard.objects.all()[0]
+    passcard = Passcard.objects.get(passcode=passcode)
+
     visits_by_specific_owner = Visit.objects.filter(
-        passcard=Passcard.objects.get(passcode=passcode)
+        passcard=passcard
     )
 
     this_passcard_visits = []
     for visit in visits_by_specific_owner:
-        if visit.leaved_at is not None:
+        if visit.leaved_at:
             this_passcard_visits.append(
-                dict(
-                    entered_at=visit.entered_at,
-                    duration=visit.leaved_at - visit.entered_at,
-                    is_strange=is_visit_long(visit)
-                )
+                {
+                    'entered_at': visit.entered_at,
+                    'duration': visit.leaved_at - visit.entered_at,
+                    'is_strange': is_visit_long(visit)
+                }
             )
 
 
