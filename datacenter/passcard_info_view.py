@@ -4,7 +4,6 @@ from django.shortcuts import render
 from .models import is_visit_long
 
 
-
 def passcard_info_view(request, passcode):
     passcard = Passcard.objects.get(passcode=passcode)
 
@@ -22,7 +21,6 @@ def passcard_info_view(request, passcode):
                     'is_strange': is_visit_long(visit)
                 }
             )
-
 
     context = {
         'passcard': passcard,
