@@ -7,14 +7,14 @@ from .models import is_visit_long
 def passcard_info_view(request, passcode):
     passcard = Passcard.objects.get(passcode=passcode)
 
-    visits_by_specific_owner = Visit.objects.filter(
+    visits_of_particular_guest = Visit.objects.filter(
         passcard=passcard
     )
 
-    this_passcard_visits = []
-    for visit in visits_by_specific_owner:
+    serialized_visits_of_particular_guest = []
+    for visit in visits_of_particular_guest:
         if visit.leaved_at:
-            this_passcard_visits.append(
+            serialized_visits_of_particular_guest.append(
                 {
                     'entered_at': visit.entered_at,
                     'duration': visit.leaved_at - visit.entered_at,
@@ -24,6 +24,6 @@ def passcard_info_view(request, passcode):
 
     context = {
         'passcard': passcard,
-        'this_passcard_visits': this_passcard_visits
+        'this_passcard_visits': serialized_visits_of_particular_guest
     }
     return render(request, 'passcard_info.html', context)
